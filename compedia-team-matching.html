@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cari Tim - Compedia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #F9FAFB;
+        }
+
+        /* TOP BAR */
+        .top-bar {
+            background: #4F46E5;
+            color: white;
+            padding: 10px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+        }
+
+        .top-bar-left {
+            display: flex;
+            gap: 20px;
+        }
+
+        .top-bar-right {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .top-bar a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* MAIN NAVIGATION */
+        .main-nav {
+            background: white;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #E5E7EB;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            font-size: 26px;
+            font-weight: bold;
+            color: #1F2937;
+        }
+
+        .logo-text span {
+            color: #4F46E5;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #374151;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #4F46E5;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-outline {
+            background: white;
+            color: #4F46E5;
+            border: 2px solid #4F46E5;
+        }
+
+        .btn-outline:hover {
+            background: #4F46E5;
+            color: white;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6B7280;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4B5563;
+        }
+
+        .btn-success {
+            background: #10B981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        /* BREADCRUMB */
+        .breadcrumb {
+            padding: 20px 50px;
+            background: #F3F4F6;
+            font-size: 14px;
+        }
+
+        .breadcrumb a {
+            color: #4F46E5;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* HERO SECTION */
+        .matching-hero {
+            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+            color: white;
+            padding: 80px 50px;
+            text-align: center;
+        }
+
+        .matching-hero h1 {
+            font-size: 42px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .matching-hero p {
+            font-size: 18px;
+            opacity: 0.95;
+            margin-bottom: 30px;
+        }
+
+        .toggle-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .toggle-btn {
+            padding: 15px 40px;
+            border: 2px solid white;
+            background: transparent;
+            color: white;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .toggle-btn.active,
+        .toggle-btn:hover {
+            background: white;
+            color: #4F46E5;
+        }
+
+        /* MATCHING CONTAINER */
+        .matching-container {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 30px;
+            padding: 40px 50px;
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        /* SIDEBAR FILTER */
+        .matching-sidebar {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            height: fit-content;
+            position: sticky;
+            top: 140px;
+        }
+
+        .filter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #E5E7EB;
+        }
+
+        .filter-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1F2937;
+        }
+
+        .clear-filters {
+            color: #4F46E5;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .filter-group {
+            margin-bottom: 25px;
+        }
+
+        .filter-group-title {
+            font-size: 15px;
+            font-weight: bold;
+            color: #1F2937;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .filter-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+            cursor: pointer;
+            accent-color: #4F46E5;
+        }
+
+        .filter-option label {
+            cursor: pointer;
+            color: #374151;
+            font-size: 14px;
+        }
+
+        .filter-option:hover label {
+            color: #4F46E5;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #D1D5DB;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-bottom: 10px;
+            background: white;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .skill-tag {
+            background: #EEF2FF;
+            color: #4F46E5;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .skill-tag:hover,
+        .skill-tag.selected {
+            background: #4F46E5;
+            color: white;
+        }
+
+        .apply-filters {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+        }
+
+        /* PROFILES GRID */
+        .profiles-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .profiles-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #E5E7EB;
+        }
+
+        .profiles-count {
+            font-size: 18px;
+            color: #1F2937;
+        }
+
+        .profiles-count strong {
+            color: #4F46E5;
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 5px;
+        }
+
+        .view-btn {
+            padding: 8px 15px;
+            border: 1px solid #D1D5DB;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .view-btn.active {
+            background: #4F46E5;
+            color: white;
+            border-color: #4F46E5;
+        }
+
+        .profiles-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .profile-card {
+            background: white;
+            border: 1px solid #E5E7EB;
+            border-radius: 12px;
+            padding: 25px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-color: #4F46E5;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .profile-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .profile-avatar.green {
+            background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+        }
+
+        .profile-avatar.orange {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+        }
+
+        .profile-avatar.pink {
+            background: linear-gradient(135deg, #EC4899 0%, #BE185D 100%);
+        }
+
+        .profile-info h3 {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1F2937;
+            margin-bottom: 5px;
+        }
+
+        .profile-info p {
+            font-size: 14px;
+            color: #6B7280;
+            margin-bottom: 3px;
+        }
+
+        .profile-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .profile-status.online {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .profile-status.offline {
+            background: #F3F4F6;
+            color: #6B7280;
+        }
+
+        .profile-details {
+            margin-bottom: 20px;
+        }
+
+        .detail-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #374151;
+        }
+
+        .detail-row span:first-child {
+            width: 25px;
+        }
+
+        .skill-section {
+            margin-bottom: 20px;
+        }
+
+        .skill-section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1F2937;
+            margin-bottom: 10px;
+        }
+
+        .skill-level {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .skill-name {
+            width: 120px;
+            font-size: 13px;
+            color: #374151;
+        }
+
+        .skill-bar {
+            flex: 1;
+            height: 8px;
+            background: #E5E7EB;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4F46E5 0%, #7C3AED 100%);
+            border-radius: 4px;
+        }
+
+        .skill-stars {
+            color: #F59E0B;
+            font-size: 12px;
+            width: 60px;
+        }
+
+        .looking-for {
+            background: #F9FAFB;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .looking-for-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #4F46E5;
+            margin-bottom: 8px;
+        }
+
+        .looking-for-text {
+            font-size: 14px;
+            color: #374151;
+            line-height: 1.6;
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .profile-actions .btn {
+            flex: 1;
+            text-align: center;
+        }
+
+        /* STATS BAR */
+        .stats-bar {
+            background: white;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid #E5E7EB;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #4F46E5;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: #6B7280;
+            margin-top: 5px;
+        }
+
+        /* HOW MATCHING WORKS */
+        .how-it-works {
+            padding: 60px 50px;
+            background: #F9FAFB;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: #EEF2FF;
+            color: #4F46E5;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1F2937;
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: #6B7280;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .step-card {
+            background: white;
+            padding: 30px 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+        .step-card:not(:last-child)::after {
+            content: '→';
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: #D1D5DB;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0 auto 15px;
+        }
+
+        .step-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #1F2937;
+            margin-bottom: 10px;
+        }
+
+        .step-desc {
+            font-size: 13px;
+            color: #6B7280;
+            line-height: 1.6;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: #1F2937;
+            color: white;
+            padding: 60px 50px 30px;
+            margin-top: 50px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 50px;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+        }
+
+        .footer-brand .logo-text {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .footer-brand .logo-text span {
+            color: #4F46E5;
+        }
+
+        .footer-brand p {
+            color: #9CA3AF;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 12px;
+        }
+
+        .footer-social a {
+            width: 38px;
+            height: 38px;
+            background: #374151;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-social a:hover {
+            background: #4F46E5;
+        }
+
+        .footer-column h4 {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #9CA3AF;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #374151;
+            padding-top: 25px;
+            text-align: center;
+            color: #9CA3AF;
+            font-size: 14px;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #1F2937;
+        }
+
+        .modal-desc {
+            color: #6B7280;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        /* CREATE TEAM SECTION */
+        .create-team-section {
+            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+            color: white;
+            padding: 60px 50px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .create-team-section h2 {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .create-team-section p {
+            font-size: 16px;
+            opacity: 0.95;
+            margin-bottom: 30px;
+        }
+
+        .create-team-btn {
+            background: white;
+            color: #4F46E5;
+            padding: 15px 40px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .create-team-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <span>📧 contact@compedia.id</span>
+            <span>📱 +62 812-XXXX-XXXX</span>
+        </div>
+        <div class="top-bar-right">
+            <a href="#">Bahasa Indonesia ▼</a>
+            <a href="#">Bantuan</a>
+            <a href="#">Untuk Kampus</a>
+        </div>
+    </div>
+
+    <!-- MAIN NAVIGATION -->
+    <nav class="main-nav">
+        <div class="logo-section" onclick="window.location.href='compedia-landing-page.html'">
+            <div class="logo-icon">C</div>
+            <div class="logo-text">Comp<span>edia</span></div>
+        </div>
+
+        <div class="nav-links">
+            <a href="compedia-landing-page.html">Beranda</a>
+            <a href="compedia-search-page.html">Cari Lomba</a>
+            <a href="compedia-team-matching.html" class="active">Cari Tim</a>
+            <a href="#">Cara Kerja</a>
+            <a href="#">Blog</a>
+            <a href="#">Tentang Kami</a>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="compedia-login.html" class="btn btn-outline">Masuk</a>
+            <a href="compedia-register.html" class="btn btn-primary">Daftar Gratis</a>
+        </div>
+    </nav>
+
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb">
+        <a href="compedia-landing-page.html">Beranda</a> /
+        <strong>Cari Tim</strong>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="matching-hero">
+        <h1>🤝 CARI REKAN TIM IDEALMU</h1>
+        <p>Temukan tim yang solid berdasarkan skill, minat, dan komitmen untuk memenangkan lomba</p>
+
+        <div class="toggle-buttons">
+            <button class="toggle-btn active" onclick="switchMode('need')">🔍 Saya Butuh Tim</button>
+            <button class="toggle-btn" onclick="switchMode('have')">📢 Saya Punya Tim</button>
+        </div>
+    </section>
+
+    <!-- STATS BAR -->
+    <div class="stats-bar">
+        <div class="stat-item">
+            <div class="stat-number">5,000+</div>
+            <div class="stat-label">Tim Terbentuk</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">10,000+</div>
+            <div class="stat-label">Profil Aktif</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">85%</div>
+            <div class="stat-label">Match Success Rate</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">500+</div>
+            <div class="stat-label">Lomba Dimenangkan</div>
+        </div>
+    </div>
+
+    <!-- MATCHING CONTAINER -->
+    <div class="matching-container">
+        <!-- SIDEBAR FILTER -->
+        <aside class="matching-sidebar">
+            <div class="filter-header">
+                <h2 class="filter-title">🔍 Filter Pencarian</h2>
+                <span class="clear-filters">Reset</span>
+            </div>
+
+            <!-- Lomba -->
+            <div class="filter-group">
+                <div class="filter-group-title">🏆 Untuk Lomba</div>
+                <select class="form-select">
+                    <option>National Hackathon 2026</option>
+                    <option>UI/UX Design Challenge</option>
+                    <option>Business Plan Competition</option>
+                    <option>Essay Competition</option>
+                    <option>Semua Lomba</option>
+                </select>
+            </div>
+
+            <!-- Role/Posisi -->
+            <div class="filter-group">
+                <div class="filter-group-title">💼 Posisi yang Dicari</div>
+                <div class="filter-option">
+                    <input type="checkbox" id="programmer" checked>
+                    <label for="programmer">Programmer/Developer</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="designer" checked>
+                    <label for="designer">UI/UX Designer</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="analyst">
+                    <label for="analyst">Data Analyst</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="business">
+                    <label for="business">Business Developer</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="writer">
+                    <label for="writer">Content Writer</label>
+                </div>
+            </div>
+
+            <!-- Skill -->
+            <div class="filter-group">
+                <div class="filter-group-title">⚡ Skill Teknis</div>
+                <div class="skill-tags">
+                    <span class="skill-tag selected">Python</span>
+                    <span class="skill-tag">JavaScript</span>
+                    <span class="skill-tag">Figma</span>
+                    <span class="skill-tag">Machine Learning</span>
+                    <span class="skill-tag">Data Analysis</span>
+                    <span class="skill-tag">UI/UX</span>
+                    <span class="skill-tag">Business Model</span>
+                    <span class="skill-tag">Public Speaking</span>
+                </div>
+            </div>
+
+            <!-- Ketersediaan -->
+            <div class="filter-group">
+                <div class="filter-group-title">⏰ Ketersediaan</div>
+                <div class="filter-option">
+                    <input type="checkbox" id="fulltime" checked>
+                    <label for="fulltime">Full-time (Setiap Hari)</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="parttime" checked>
+                    <label for="parttime">Part-time (Weekend)</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="flexible">
+                    <label for="flexible">Flexible</label>
+                </div>
+            </div>
+
+            <!-- Lokasi -->
+            <div class="filter-group">
+                <div class="filter-group-title">📍 Lokasi</div>
+                <select class="form-select">
+                    <option>Semua Lokasi</option>
+                    <option>Jakarta</option>
+                    <option>Bandung</option>
+                    <option>Yogyakarta</option>
+                    <option>Surabaya</option>
+                    <option>Online</option>
+                </select>
+            </div>
+
+            <!-- Universitas -->
+            <div class="filter-group">
+                <div class="filter-group-title">🎓 Universitas</div>
+                <select class="form-select">
+                    <option>Semua Universitas</option>
+                    <option>Universitas Indonesia</option>
+                    <option>IT Bandung</option>
+                    <option>UGM Yogyakarta</option>
+                    <option>ITS Surabaya</option>
+                </select>
+            </div>
+
+            <button class="btn btn-primary apply-filters">Terapkan Filter</button>
+        </aside>
+
+        <!-- PROFILES SECTION -->
+        <main class="profiles-section">
+            <div class="profiles-header">
+                <div class="profiles-count">
+                    Ditemukan <strong>8 profil</strong> sesuai kriteria
+                </div>
+                <div class="view-toggle">
+                    <button class="view-btn active">Grid</button>
+                    <button class="view-btn">List</button>
+                </div>
+            </div>
+
+            <div class="profiles-grid">
+                <!-- Profile Card 1 -->
+                <div class="profile-card" onclick="openModal('invite', 'Andi Wijaya')">
+                    <div class="profile-header">
+                        <div class="profile-avatar">AW</div>
+                        <div class="profile-info">
+                            <h3>Andi Wijaya</h3>
+                            <p>Universitas Indonesia - Ilmu Komputer</p>
+                            <span class="profile-status online">🟢 Online</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-details">
+                        <div class="detail-row">
+                            <span>📍</span>
+                            <span>Jakarta, Indonesia</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>🎓</span>
+                            <span>Semester 5</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>⏰</span>
+                            <span>Full-time Available</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-section">
+                        <div class="skill-section-title">💼 Skill Utama</div>
+                        <div class="skill-level">
+                            <span class="skill-name">Python</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 95%;"></div>
+                            </div>
+                            <span class="skill-stars">★★★★★</span>
+                        </div>
+                        <div class="skill-level">
+                            <span class="skill-name">Machine Learning</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 85%;"></div>
+                            </div>
+                            <span class="skill-stars">★★★★☆</span>
+                        </div>
+                        <div class="skill-level">
+                            <span class="skill-name">Data Analysis</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 90%;"></div>
+                            </div>
+                            <span class="skill-stars">★★★★★</span>
+                        </div>
+                    </div>
+
+                    <div class="looking-for">
+                        <div class="looking-for-title">🎯 Mencari Tim Untuk:</div>
+                        <div class="looking-for-text">National Hackathon 2026 - Health Tech Category. Butuh tim yang
+                            solid dengan komitmen tinggi.</div>
+                    </div>
+
+                    <div class="profile-actions">
+                        <button class="btn btn-outline">👁 Lihat Profil</button>
+                        <button class="btn btn-primary">✉️ Undang</button>
+                    </div>
+                </div>
+
+                <!-- Profile Card 2 -->
+                <div class="profile-card" onclick="openModal('invite', 'Siti Nurhaliza')">
+                    <div class="profile-header">
+                        <div class="profile-avatar green">SN</div>
+                        <div class="profile-info">
+                            <h3>Siti Nurhaliza</h3>
+                            <p>ITB - Desain Komunikasi Visual</p>
+                            <span class="profile-status online">🟢 Online</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-details">
+                        <div class="detail-row">
+                            <span>📍</span>
+                            <span>Bandung, Indonesia</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>🎓</span>
+                            <span>Semester 6</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>⏰</span>
+                            <span>Part-time (Weekend)</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-section">
+                        <div class="skill-section-title">💼 Skill Utama</div>
+                        <div class="skill-level">
+                            <span class="skill-name">UI/UX Design</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 95%;"></div>
+                            </div>
+                            <span class="skill-stars">★★★★★</span>
+                        </div>
+                        <div class="skill-level">
+                            <span class="skill-name">Figma</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 90%;"></div>
+                            </div>
+                            <span class="skill-stars">★★★★★</span>
+                        </div>
+                        <div class="skill-level">
+                            <span class="skill-name">Prototyping</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 85%;"></div>
+                            </div>
+                            <span class="skill-stars">★★★★☆</span>
+                        </div>
+                    </div>
+
+                    <div class="looking-for">
+                        <div class="looking-for-title">🎯 Mencari Tim Untuk:</div>
+                        <div class="looking-for-text">UI/UX Design Challenge 2026. Tertarik dengan proyek Smart City dan
+                            sustainability.</div>
+                    </div>
+
+                    <div class="profile-actions">
+                        <button class="btn btn-outline">👁 Lihat Profil</button>
+                        <button class="btn btn-primary">✉️ Undang</button>
+                    </div>
+                </div>
+
+                <!-- Profile Card 3 -->
+                <div class="profile-card" onclick="openModal('invite', 'Revasya Pratama')">
+                    <div class="profile-header">
+                        <div class="profile-avatar orange">RP</div>
+                        <div class="profile-info">
+                            <h3>Revasya Pratama</h3>
+                            <p>UGM - Teknik Informatika</p>
+                            <span class="profile-status offline">⚪ Offline</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-details">
+                        <div class="detail-row">
+                            <span>📍</span>
+                            <span>Yogyakarta, Indonesia</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>🎓</span>
+                            <span>Semester 7</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>⏰</span>
+                            <span>Flexible</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-section">
+                        <div class="skill-section-title">💼 Skill Utama</div>
+                        <div class="skill-level">
+                            <span class="skill-name">JavaScript</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 90%;"></div>
+                            </div>
+                            <span class="skill-stars">★★★★★</span>
+                        </div>
+                        <div class="skill-level">
+                            <span class="skill-name">React.js</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 85%;"></div>
+                            </div>
+                            <span class="skill-stars">★★★★☆</span>
+                        </div>
+                        <div class="skill-level">
+                            <span class="skill-name">Node.js</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 80%;"></div>
+                            </div>
+                            <span class="skill-stars">★★★★☆</span>
+                        </div>
+                    </div>
+
+                    <div class="looking-for">
+                        <div class="looking-for-title">🎯 Mencari Tim Untuk:</div>
+                        <div class="looking-for-text">Hackathon & Web Development Competition. Pengalaman juara 2
+                            nasional 2025.</div>
+                    </div>
+
+                    <div class="profile-actions">
+                        <button class="btn btn-outline">👁 Lihat Profil</button>
+                        <button class="btn btn-primary">✉️ Undang</button>
+                    </div>
+                </div>
+
+                <!-- Profile Card 4 -->
+                <div class="profile-card" onclick="openModal('invite', 'Sujata Dewi')">
+                    <div class="profile-header">
+                        <div class="profile-avatar pink">SD</div>
+                        <div class="profile-info">
+                            <h3>Sujata Dewi</h3>
+                            <p>UI - Fakultas Ekonomi</p>
+                            <span class="profile-status online">🟢 Online</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-details">
+                        <div class="detail-row">
+                            <span>📍</span>
+                            <span>Jakarta, Indonesia</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>🎓</span>
+                            <span>Semester 5</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>⏰</span>
+                            <span>Part-time (Weekend)</span>
+                        </div>
+                    </div>
+
+                    <div class="skill-section">
+                        <div class="skill-section-title">💼 Skill Utama</div>
+                        <div class="skill-level">
+                            <span class="skill-name">Business Model</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 90%;"></div>
+                            </div>
+                            <span class="skill-stars">★★★★★</span>
+                        </div>
+                        <div class="skill-level">
+                            <span class="skill-name">Financial Analysis</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 85%;"></div>
+                            </div>
+                            <span class="skill-stars">★★★★☆</span>
+                        </div>
+                        <div class="skill-level">
+                            <span class="skill-name">Public Speaking</span>
+                            <div class="skill-bar">
+                                <div class="skill-fill" style="width: 95%;"></div>
+                            </div>
+                            <span class="skill-stars">★★★★★</span>
+                        </div>
+                    </div>
+
+                    <div class="looking-for">
+                        <div class="looking-for-title">🎯 Mencari Tim Untuk:</div>
+                        <div class="looking-for-text">Business Plan Competition. Bisa handle pitch deck dan financial
+                            projection.</div>
+                    </div>
+
+                    <div class="profile-actions">
+                        <button class="btn btn-outline">👁 Lihat Profil</button>
+                        <button class="btn btn-primary">✉️ Undang</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGINATION -->
+            <div class="pagination" style="display: flex; justify-content: center; gap: 10px; margin-top: 30px;">
+                <button class="btn btn-outline" disabled>← Prev</button>
+                <button class="btn btn-primary">1</button>
+                <button class="btn btn-outline">2</button>
+                <button class="btn btn-outline">3</button>
+                <button class="btn btn-outline">Next →</button>
+            </div>
+        </main>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <section class="how-it-works">
+        <div class="section-header">
+            <span class="section-tag">📖 CARA KERJA</span>
+            <h2 class="section-title">Smart Matching dalam 4 Langkah</h2>
+            <p class="section-subtitle">Temukan tim ideal dengan mudah dan cepat</p>
+        </div>
+
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h3 class="step-title">Buat Profil</h3>
+                <p class="step-desc">Lengkapi profil dengan skill, minat, dan ketersediaan waktu kamu</p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h3 class="step-title">Setel Preferensi</h3>
+                <p class="step-desc">Tentukan kriteria tim yang kamu cari (lomba, role, skill)</p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h3 class="step-title">Get Matched</h3>
+                <p class="step-desc">Algoritma kami mencocokkan dengan kandidat terbaik</p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">4</div>
+                <h3 class="step-title">Mulai Kolaborasi</h3>
+                <p class="step-desc">Hubungi dan mulai berkolaborasi untuk memenangkan lomba</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CREATE TEAM SECTION -->
+    <section class="create-team-section">
+        <h2>💡 Punya Ide Tim? Buat Tim Sendiri!</h2>
+        <p>Jangan tunggu orang lain来找 kamu. Buat tim sendiri dan cari anggota yang sesuai kebutuhanmu.</p>
+        <button class="create-team-btn" onclick="openModal('createTeam')">🚀 Buat Tim Sekarang</button>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <span class="logo-text">Comp<span>edia</span></span>
+                <p>Platform agregator lomba terpusat untuk mahasiswa Indonesia. Temukan info lomba, bentuk tim ideal,
+                    dan raih prestasimu!</p>
+                <div class="footer-social">
+                    <a href="#">📘</a>
+                    <a href="#">📸</a>
+                    <a href="#">🐦</a>
+                    <a href="#">💼</a>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h4>Produk</h4>
+                <ul>
+                    <li><a href="compedia-search-page.html">Cari Lomba</a></li>
+                    <li><a href="compedia-team-matching.html">Cari Tim</a></li>
+                    <li><a href="#">Premium</a></li>
+                    <li><a href="#">Untuk Kampus</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4>Perusahaan</h4>
+                <ul>
+                    <li><a href="#">Tentang Kami</a></li>
+                    <li><a href="#">Karir</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Kontak</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4>Bantuan</h4>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 PT. Compedia, Tangerang. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h3 class="modal-title" id="modal-title">Konfirmasi</h3>
+            <p class="modal-desc" id="modal-desc">Deskripsi modal</p>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" onclick="closeModal()">Batal</button>
+                <button class="btn btn-primary" onclick="closeModal()">Konfirmasi</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Mode
+        function switchMode(mode) {
+            const buttons = document.querySelectorAll('.toggle-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (mode === 'have') {
+                alert('Fitur "Saya Punya Tim" akan mengarahkan ke halaman buat tim. Fitur ini akan tersedia segera!');
+            }
+        }
+
+        // Skill Tag Selection
+        document.querySelectorAll('.skill-tag').forEach(tag => {
+            tag.addEventListener('click', function () {
+                this.classList.toggle('selected');
+            });
+        });
+
+        // Modal Functionality
+        function openModal(action, name) {
+            const modal = document.getElementById('modal');
+            const title = document.getElementById('modal-title');
+            const desc = document.getElementById('modal-desc');
+
+            if (action === 'invite') {
+                title.textContent = 'Undang ke Tim';
+                desc.textContent = `Anda akan mengirim undangan ke ${name}. Mereka akan menerima notifikasi dan dapat menerima atau menolak undangan Anda.`;
+            } else if (action === 'createTeam') {
+                title.textContent = 'Buat Tim Baru';
+                desc.textContent = 'Isi informasi tim, posisi yang dibutuhkan, dan kriteria anggota. Tim Anda akan muncul di pencarian anggota lain.';
+            } else if (action === 'viewProfile') {
+                title.textContent = 'Lihat Profil Lengkap';
+                desc.textContent = 'Anda akan diarahkan ke profil lengkap dengan portfolio, riwayat lomba, dan rating dari tim sebelumnya.';
+            }
+
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function (event) {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // View Toggle
+        document.querySelectorAll('.view-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+
+</body>
+
+</html>

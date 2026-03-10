@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Compedia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #F9FAFB;
+        }
+
+        /* TOP BAR */
+        .top-bar {
+            background: #4F46E5;
+            color: white;
+            padding: 10px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+        }
+
+        .top-bar-left {
+            display: flex;
+            gap: 20px;
+        }
+
+        .top-bar-right {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .top-bar a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* MAIN NAVIGATION */
+        .main-nav {
+            background: white;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #E5E7EB;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            font-size: 26px;
+            font-weight: bold;
+            color: #1F2937;
+        }
+
+        .logo-text span {
+            color: #4F46E5;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #374151;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #4F46E5;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-outline {
+            background: white;
+            color: #4F46E5;
+            border: 2px solid #4F46E5;
+        }
+
+        .btn-outline:hover {
+            background: #4F46E5;
+            color: white;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6B7280;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4B5563;
+        }
+
+        .btn-success {
+            background: #10B981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-danger {
+            background: #EF4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #DC2626;
+        }
+
+        .btn-warning {
+            background: #F59E0B;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #D97706;
+        }
+
+        /* DASHBOARD CONTAINER */
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: calc(100vh - 140px);
+        }
+
+        /* SIDEBAR */
+        .dashboard-sidebar {
+            background: linear-gradient(180deg, #4F46E5 0%, #7C3AED 100%);
+            color: white;
+            padding: 40px 25px;
+            position: sticky;
+            top: 140px;
+            height: fit-content;
+        }
+
+        .user-profile {
+            text-align: center;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 30px;
+        }
+
+        .user-avatar {
+            width: 90px;
+            height: 90px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4F46E5;
+            font-size: 36px;
+            font-weight: bold;
+            margin: 0 auto 15px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .user-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .user-email {
+            font-size: 13px;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+
+        .user-badge {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .dashboard-nav {
+            list-style: none;
+        }
+
+        .dashboard-nav li {
+            margin-bottom: 8px;
+        }
+
+        .dashboard-nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 18px;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-size: 15px;
+        }
+
+        .dashboard-nav a:hover,
+        .dashboard-nav a.active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .dashboard-nav a.active {
+            font-weight: 600;
+        }
+
+        .nav-icon {
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            background: #EF4444;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .sidebar-cta {
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .sidebar-cta h4 {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar-cta p {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+
+        .sidebar-cta .btn {
+            width: 100%;
+            background: white;
+            color: #4F46E5;
+            font-size: 13px;
+            padding: 10px;
+        }
+
+        /* MAIN CONTENT */
+        .dashboard-main {
+            padding: 40px 50px;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+
+        .dashboard-title h1 {
+            font-size: 28px;
+            color: #1F2937;
+            margin-bottom: 5px;
+        }
+
+        .dashboard-title p {
+            color: #6B7280;
+            font-size: 14px;
+        }
+
+        .dashboard-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        /* STATS CARDS */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .stat-card.blue::before {
+            background: #4F46E5;
+        }
+
+        .stat-card.green::before {
+            background: #10B981;
+        }
+
+        .stat-card.orange::before {
+            background: #F59E0B;
+        }
+
+        .stat-card.purple::before {
+            background: #7C3AED;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .stat-card.blue .stat-icon {
+            background: #EEF2FF;
+            color: #4F46E5;
+        }
+
+        .stat-card.green .stat-icon {
+            background: #D1FAE5;
+            color: #10B981;
+        }
+
+        .stat-card.orange .stat-icon {
+            background: #FFFBEB;
+            color: #F59E0B;
+        }
+
+        .stat-card.purple .stat-icon {
+            background: #F3E8FF;
+            color: #7C3AED;
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1F2937;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #6B7280;
+        }
+
+        .stat-change {
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .stat-change.positive {
+            color: #10B981;
+        }
+
+        .stat-change.negative {
+            color: #EF4444;
+        }
+
+        /* CONTENT GRID */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+
+        /* CARDS */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 25px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #F3F4F6;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1F2937;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-action {
+            color: #4F46E5;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .card-action:hover {
+            text-decoration: underline;
+        }
+
+        /* DEADLINE ITEMS */
+        .deadline-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .deadline-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px;
+            background: #F9FAFB;
+            border-radius: 10px;
+            border-left: 4px solid #EF4444;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .deadline-item:hover {
+            background: #FEF2F2;
+            transform: translateX(5px);
+        }
+
+        .deadline-item.warning {
+            border-left-color: #F59E0B;
+            background: #FFFBEB;
+        }
+
+        .deadline-item.warning:hover {
+            background: #FEF3C7;
+        }
+
+        .deadline-item.success {
+            border-left-color: #10B981;
+            background: #D1FAE5;
+        }
+
+        .deadline-icon {
+            width: 45px;
+            height: 45px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .deadline-info {
+            flex: 1;
+        }
+
+        .deadline-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1F2937;
+            margin-bottom: 5px;
+        }
+
+        .deadline-meta {
+            font-size: 13px;
+            color: #6B7280;
+        }
+
+        .deadline-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-small {
+            padding: 6px 14px;
+            font-size: 12px;
+        }
+
+        /* TEAM CARDS */
+        .team-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .team-card {
+            padding: 18px;
+            background: #F9FAFB;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .team-card:hover {
+            background: #EEF2FF;
+            transform: translateX(5px);
+        }
+
+        .team-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .team-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1F2937;
+        }
+
+        .team-status {
+            font-size: 12px;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .team-status.active {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .team-status.recruiting {
+            background: #FFFBEB;
+            color: #92400E;
+        }
+
+        .team-members {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .member-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            border: 2px solid white;
+        }
+
+        .member-avatar.more {
+            background: #E5E7EB;
+            color: #6B7280;
+        }
+
+        .team-progress {
+            margin-top: 10px;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #E5E7EB;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4F46E5 0%, #7C3AED 100%);
+            border-radius: 3px;
+        }
+
+        .progress-text {
+            font-size: 12px;
+            color: #6B7280;
+        }
+
+        /* SAVED COMPETITIONS */
+        .saved-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .saved-item {
+            padding: 15px;
+            background: #F9FAFB;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .saved-item:hover {
+            background: #EEF2FF;
+            transform: translateY(-2px);
+        }
+
+        .saved-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #1F2937;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .saved-meta {
+            font-size: 11px;
+            color: #6B7280;
+        }
+
+        /* ACTIVITY FEED */
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .activity-item:hover {
+            background: #F9FAFB;
+        }
+
+        .activity-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .activity-icon.blue {
+            background: #EEF2FF;
+            color: #4F46E5;
+        }
+
+        .activity-icon.green {
+            background: #D1FAE5;
+            color: #10B981;
+        }
+
+        .activity-icon.orange {
+            background: #FFFBEB;
+            color: #F59E0B;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-text {
+            font-size: 13px;
+            color: #374151;
+            line-height: 1.5;
+        }
+
+        .activity-text strong {
+            color: #1F2937;
+        }
+
+        .activity-time {
+            font-size: 11px;
+            color: #9CA3AF;
+            margin-top: 5px;
+        }
+
+        /* ACHIEVEMENTS */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .achievement-card {
+            text-align: center;
+            padding: 20px 15px;
+            background: #F9FAFB;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .achievement-card:hover {
+            background: #EEF2FF;
+            transform: translateY(-3px);
+        }
+
+        .achievement-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .achievement-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: #1F2937;
+            margin-bottom: 5px;
+        }
+
+        .achievement-desc {
+            font-size: 11px;
+            color: #6B7280;
+        }
+
+        .achievement-card.locked {
+            opacity: 0.5;
+        }
+
+        .achievement-card.locked .achievement-icon {
+            filter: grayscale(100%);
+        }
+
+        /* FOOTER */
+        .footer {
+            background: #1F2937;
+            color: white;
+            padding: 60px 50px 30px;
+            margin-top: 50px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 50px;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+        }
+
+        .footer-brand .logo-text {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .footer-brand .logo-text span {
+            color: #4F46E5;
+        }
+
+        .footer-brand p {
+            color: #9CA3AF;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 12px;
+        }
+
+        .footer-social a {
+            width: 38px;
+            height: 38px;
+            background: #374151;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-social a:hover {
+            background: #4F46E5;
+        }
+
+        .footer-column h4 {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #9CA3AF;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #374151;
+            padding-top: 25px;
+            text-align: center;
+            color: #9CA3AF;
+            font-size: 14px;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #1F2937;
+        }
+
+        .modal-desc {
+            color: #6B7280;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        /* NOTIFICATION BADGE */
+        .notification-bell {
+            position: relative;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 8px;
+            height: 8px;
+            background: #EF4444;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <span>📧 contact@compedia.id</span>
+            <span>📱 +62 812-XXXX-XXXX</span>
+        </div>
+        <div class="top-bar-right">
+            <a href="#">Bahasa Indonesia ▼</a>
+            <a href="#">Bantuan</a>
+            <a href="#">Untuk Kampus</a>
+        </div>
+    </div>
+
+    <!-- MAIN NAVIGATION -->
+    <nav class="main-nav">
+        <div class="logo-section" onclick="window.location.href='compedia-landing-page.html'">
+            <div class="logo-icon">C</div>
+            <div class="logo-text">Comp<span>edia</span></div>
+        </div>
+
+        <div class="nav-links">
+            <a href="compedia-landing-page.html">Beranda</a>
+            <a href="compedia-search-page.html">Cari Lomba</a>
+            <a href="compedia-team-matching.html">Cari Tim</a>
+            <a href="#">Cara Kerja</a>
+            <a href="#">Blog</a>
+            <a href="#">Tentang Kami</a>
+        </div>
+
+        <div class="nav-buttons">
+            <div class="notification-bell" onclick="openModal('notifications')">
+                🔔
+                <span class="notification-badge"></span>
+            </div>
+            <a href="compedia-dashboard.html" class="btn btn-primary">Dashboard</a>
+        </div>
+    </nav>
+
+    <!-- DASHBOARD CONTAINER -->
+    <div class="dashboard-container">
+        <!-- SIDEBAR -->
+        <aside class="dashboard-sidebar">
+            <div class="user-profile">
+                <div class="user-avatar">M</div>
+                <div class="user-name">Meriel Ananda</div>
+                <div class="user-email">meriel@ui.ac.id</div>
+                <span class="user-badge">🎓 Free Plan</span>
+            </div>
+
+            <ul class="dashboard-nav">
+                <li>
+                    <a href="compedia-dashboard.html" class="active">
+                        <span class="nav-icon">📊</span>
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="compedia-search-page.html">
+                        <span class="nav-icon">🔍</span>
+                        Cari Lomba
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="nav-icon">💾</span>
+                        Lomba Disimpan
+                        <span class="nav-badge">12</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="nav-icon">🤝</span>
+                        Tim Saya
+                        <span class="nav-badge">3</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="nav-icon">📅</span>
+                        Kalender
+                    </a>
+                </li>
+                <li>
+                    <a href="#" onclick="openModal('notifications')">
+                        <span class="nav-icon">🔔</span>
+                        Notifikasi
+                        <span class="nav-badge">5</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="nav-icon">🏆</span>
+                        Prestasi
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="nav-icon">⚙️</span>
+                        Pengaturan
+                    </a>
+                </li>
+                <li style="margin-top: 30px;">
+                    <a href="compedia-landing-page.html">
+                        <span class="nav-icon">🚪</span>
+                        Logout
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-cta">
+                <h4>🚀 Upgrade ke Premium</h4>
+                <p>Dapatkan fitur eksklusif dan unlimited access</p>
+                <button class="btn" onclick="openModal('premium')">Upgrade Sekarang</button>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="dashboard-main">
+            <div class="dashboard-header">
+                <div class="dashboard-title">
+                    <h1>👋 Selamat Datang, Meriel!</h1>
+                    <p>Kelola semua lomba dan tim kamu dalam satu tempat</p>
+                </div>
+                <div class="dashboard-actions">
+                    <button class="btn btn-outline" onclick="openModal('calendar')">📅 Sync Calendar</button>
+                    <button class="btn btn-primary" onclick="window.location.href='compedia-search-page.html'">🔍 Cari
+                        Lomba</button>
+                </div>
+            </div>
+
+            <!-- STATS CARDS -->
+            <div class="stats-grid">
+                <div class="stat-card blue">
+                    <div class="stat-icon">💾</div>
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Lomba Disimpan</div>
+                    <div class="stat-change positive">↑ 3 dari minggu lalu</div>
+                </div>
+
+                <div class="stat-card green">
+                    <div class="stat-icon">🤝</div>
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Tim Aktif</div>
+                    <div class="stat-change positive">↑ 1 dari minggu lalu</div>
+                </div>
+
+                <div class="stat-card orange">
+                    <div class="stat-icon">⏰</div>
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Deadline Mendekati</div>
+                    <div class="stat-change negative">⚠️ 2 urgent (H-7)</div>
+                </div>
+
+                <div class="stat-card purple">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">Prestasi Diraih</div>
+                    <div class="stat-change positive">↑ 2 dari bulan lalu</div>
+                </div>
+            </div>
+
+            <!-- CONTENT GRID -->
+            <div class="content-grid">
+                <!-- LEFT COLUMN -->
+                <div class="left-column">
+                    <!-- DEADLINE CARD -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">⏰ Deadline Mendekati</h2>
+                            <a href="#" class="card-action" onclick="openModal('calendar')">Lihat Semua →</a>
+                        </div>
+
+                        <div class="deadline-list">
+                            <div class="deadline-item" onclick="window.location.href='compedia-detail-page.html'">
+                                <div class="deadline-icon">🚨</div>
+                                <div class="deadline-info">
+                                    <div class="deadline-title">National Hackathon 2026</div>
+                                    <div class="deadline-meta">📅 15 April 2026 • 🏆 Rp 50 Juta • 👥 Tim 3-4 orang</div>
+                                </div>
+                                <div class="deadline-actions">
+                                    <button class="btn btn-primary btn-small"
+                                        onclick="event.stopPropagation(); openModal('daftar')">Daftar</button>
+                                    <button class="btn btn-outline btn-small"
+                                        onclick="event.stopPropagation(); openModal('reminder')">Reminder</button>
+                                </div>
+                            </div>
+
+                            <div class="deadline-item warning"
+                                onclick="window.location.href='compedia-detail-page.html'">
+                                <div class="deadline-icon">⚠️</div>
+                                <div class="deadline-info">
+                                    <div class="deadline-title">Essay Competition - Environment</div>
+                                    <div class="deadline-meta">📅 20 April 2026 • 🏆 Rp 10 Juta • 👥 Individual</div>
+                                </div>
+                                <div class="deadline-actions">
+                                    <button class="btn btn-primary btn-small"
+                                        onclick="event.stopPropagation(); openModal('daftar')">Daftar</button>
+                                    <button class="btn btn-outline btn-small"
+                                        onclick="event.stopPropagation(); openModal('reminder')">Reminder</button>
+                                </div>
+                            </div>
+
+                            <div class="deadline-item success"
+                                onclick="window.location.href='compedia-detail-page.html'">
+                                <div class="deadline-icon">✅</div>
+                                <div class="deadline-info">
+                                    <div class="deadline-title">UI/UX Design Challenge</div>
+                                    <div class="deadline-meta">📅 25 April 2026 • 🏆 Rp 25 Juta • 👥 Tim 2-3 orang</div>
+                                </div>
+                                <div class="deadline-actions">
+                                    <button class="btn btn-success btn-small" disabled>Sudah Daftar</button>
+                                    <button class="btn btn-outline btn-small"
+                                        onclick="event.stopPropagation(); openModal('team')">Kelola Tim</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TEAM CARD -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">🤝 Tim Saya</h2>
+                            <a href="compedia-team-matching.html" class="card-action">Kelola Tim →</a>
+                        </div>
+
+                        <div class="team-list">
+                            <div class="team-card" onclick="openModal('teamDetail')">
+                                <div class="team-header">
+                                    <div class="team-name">National Hackathon 2026 Team</div>
+                                    <span class="team-status recruiting"> Mencari Anggota</span>
+                                </div>
+                                <div class="team-members">
+                                    <div class="member-avatar">M</div>
+                                    <div class="member-avatar"
+                                        style="background: linear-gradient(135deg, #10B981 0%, #059669 100%);">A</div>
+                                    <div class="member-avatar more">+2</div>
+                                    <span style="font-size: 13px; color: #6B7280; margin-left: 10px;">2/4 anggota</span>
+                                </div>
+                                <div class="team-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 50%;"></div>
+                                    </div>
+                                    <div class="progress-text">Butuh 2 anggota lagi (UI/UX Designer, Business Analyst)
+                                    </div>
+                                </div>
+                                <div style="margin-top: 12px; display: flex; gap: 10px;">
+                                    <button class="btn btn-primary btn-small"
+                                        onclick="event.stopPropagation(); window.location.href='compedia-team-matching.html'">Cari
+                                        Anggota</button>
+                                    <button class="btn btn-outline btn-small"
+                                        onclick="event.stopPropagation(); openModal('chat')">💬 Chat Tim</button>
+                                </div>
+                            </div>
+
+                            <div class="team-card" onclick="openModal('teamDetail')">
+                                <div class="team-header">
+                                    <div class="team-name">UI/UX Design Challenge Team</div>
+                                    <span class="team-status active">✅ Lengkap</span>
+                                </div>
+                                <div class="team-members">
+                                    <div class="member-avatar">M</div>
+                                    <div class="member-avatar"
+                                        style="background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);">S</div>
+                                    <div class="member-avatar"
+                                        style="background: linear-gradient(135deg, #EC4899 0%, #BE185D 100%);">R</div>
+                                    <span style="font-size: 13px; color: #6B7280; margin-left: 10px;">3/3 anggota</span>
+                                </div>
+                                <div class="team-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 100%;"></div>
+                                    </div>
+                                    <div class="progress-text">Tim lengkap - Siap berkompetisi!</div>
+                                </div>
+                                <div style="margin-top: 12px; display: flex; gap: 10px;">
+                                    <button class="btn btn-success btn-small"
+                                        onclick="event.stopPropagation(); openModal('chat')">💬 Chat Tim</button>
+                                    <button class="btn btn-outline btn-small"
+                                        onclick="event.stopPropagation(); openModal('task')">📋 Task Board</button>
+                                </div>
+                            </div>
+
+                            <div class="team-card" onclick="openModal('teamDetail')">
+                                <div class="team-header">
+                                    <div class="team-name">Business Plan Competition</div>
+                                    <span class="team-status recruiting">🔍 Mencari Anggota</span>
+                                </div>
+                                <div class="team-members">
+                                    <div class="member-avatar">M</div>
+                                    <div class="member-avatar more">+1</div>
+                                    <span style="font-size: 13px; color: #6B7280; margin-left: 10px;">1/3 anggota</span>
+                                </div>
+                                <div class="team-progress">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 33%;"></div>
+                                    </div>
+                                    <div class="progress-text">Butuh 2 anggota lagi (Financial Analyst, Presenter)</div>
+                                </div>
+                                <div style="margin-top: 12px; display: flex; gap: 10px;">
+                                    <button class="btn btn-primary btn-small"
+                                        onclick="event.stopPropagation(); window.location.href='compedia-team-matching.html'">Cari
+                                        Anggota</button>
+                                    <button class="btn btn-outline btn-small"
+                                        onclick="event.stopPropagation(); openModal('invite')">Undang Teman</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ACTIVITY FEED -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">📢 Aktivitas Terbaru</h2>
+                            <a href="#" class="card-action">Lihat Semua →</a>
+                        </div>
+
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-icon blue">📧</div>
+                                <div class="activity-content">
+                                    <div class="activity-text"><strong>Andi Wijaya</strong> menerima undangan tim untuk
+                                        National Hackathon 2026</div>
+                                    <div class="activity-time">2 jam yang lalu</div>
+                                </div>
+                            </div>
+
+                            <div class="activity-item">
+                                <div class="activity-icon green">✅</div>
+                                <div class="activity-content">
+                                    <div class="activity-text">Kamu berhasil mendaftar di <strong>UI/UX Design
+                                            Challenge</strong></div>
+                                    <div class="activity-time">5 jam yang lalu</div>
+                                </div>
+                            </div>
+
+                            <div class="activity-item">
+                                <div class="activity-icon orange">🔔</div>
+                                <div class="activity-content">
+                                    <div class="activity-text">Reminder: Deadline <strong>National Hackathon
+                                            2026</strong> dalam 7 hari</div>
+                                    <div class="activity-time">1 hari yang lalu</div>
+                                </div>
+                            </div>
+
+                            <div class="activity-item">
+                                <div class="activity-icon blue">💾</div>
+                                <div class="activity-content">
+                                    <div class="activity-text">Kamu menyimpan <strong>Business Plan Competition
+                                            2026</strong></div>
+                                    <div class="activity-time">2 hari yang lalu</div>
+                                </div>
+                            </div>
+
+                            <div class="activity-item">
+                                <div class="activity-icon green">🏆</div>
+                                <div class="activity-content">
+                                    <div class="activity-text">Selamat! Tim kamu memenangkan <strong>Data Science
+                                            Competition</strong></div>
+                                    <div class="activity-time">1 minggu yang lalu</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN -->
+                <div class="right-column">
+                    <!-- SAVED COMPETITIONS -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">💾 Lomba Disimpan</h2>
+                            <a href="#" class="card-action">Lihat Semua →</a>
+                        </div>
+
+                        <div class="saved-list">
+                            <div class="saved-item" onclick="window.location.href='compedia-detail-page.html'">
+                                <div class="saved-title">Business Plan Competition 2026</div>
+                                <div class="saved-meta">📅 30 Apr | 🏆 Rp 75 Juta</div>
+                            </div>
+                            <div class="saved-item" onclick="window.location.href='compedia-detail-page.html'">
+                                <div class="saved-title">Research Grant Program - AI</div>
+                                <div class="saved-meta">📅 5 Mei | 🏆 Rp 100 Juta</div>
+                            </div>
+                            <div class="saved-item" onclick="window.location.href='compedia-detail-page.html'">
+                                <div class="saved-title">Public Speaking Championship</div>
+                                <div class="saved-meta">📅 10 Mei | 🏆 Rp 30 Juta</div>
+                            </div>
+                            <div class="saved-item" onclick="window.location.href='compedia-detail-page.html'">
+                                <div class="saved-title">Mobile App Innovation</div>
+                                <div class="saved-meta">📅 15 Mei | 🏆 Rp 50 Juta</div>
+                            </div>
+                            <div class="saved-item" onclick="window.location.href='compedia-detail-page.html'">
+                                <div class="saved-title">Startup Pitch Competition</div>
+                                <div class="saved-meta">📅 20 Mei | 🏆 Rp 100 Juta</div>
+                            </div>
+                            <div class="saved-item" onclick="window.location.href='compedia-detail-page.html'">
+                                <div class="saved-title">Data Visualization Challenge</div>
+                                <div class="saved-meta">📅 25 Mei | 🏆 Rp 40 Juta</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ACHIEVEMENTS -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">🏆 Prestasi & Badge</h2>
+                            <a href="#" class="card-action">Lihat Semua →</a>
+                        </div>
+
+                        <div class="achievements-grid">
+                            <div class="achievement-card">
+                                <div class="achievement-icon">🎯</div>
+                                <div class="achievement-title">First Win</div>
+                                <div class="achievement-desc">Menangkan lomba pertama</div>
+                            </div>
+                            <div class="achievement-card">
+                                <div class="achievement-icon">🤝</div>
+                                <div class="achievement-title">Team Player</div>
+                                <div class="achievement-desc">Bentuk 5 tim</div>
+                            </div>
+                            <div class="achievement-card">
+                                <div class="achievement-icon">⚡</div>
+                                <div class="achievement-title">Early Bird</div>
+                                <div class="achievement-desc">Daftar H-7 sebelum deadline</div>
+                            </div>
+                            <div class="achievement-card locked">
+                                <div class="achievement-icon">🏆</div>
+                                <div class="achievement-title">Champion</div>
+                                <div class="achievement-desc">Menang 10 lomba</div>
+                            </div>
+                            <div class="achievement-card locked">
+                                <div class="achievement-icon">🌟</div>
+                                <div class="achievement-title">Star Member</div>
+                                <div class="achievement-desc">Premium 6 bulan</div>
+                            </div>
+                            <div class="achievement-card locked">
+                                <div class="achievement-icon">🎓</div>
+                                <div class="achievement-title">Mentor</div>
+                                <div class="achievement-desc">Bantu 10 anggota baru</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- UPCOMING EVENTS -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">📅 Event Mendatang</h2>
+                            <a href="#" class="card-action">Lihat Kalender →</a>
+                        </div>
+
+                        <div class="deadline-list">
+                            <div class="deadline-item">
+                                <div class="deadline-icon">🎤</div>
+                                <div class="deadline-info">
+                                    <div class="deadline-title">Webinar: Tips Menang Hackathon</div>
+                                    <div class="deadline-meta">📅 10 April 2026 • 🕐 19.00 WIB • 🌐 Online</div>
+                                </div>
+                                <div class="deadline-actions">
+                                    <button class="btn btn-outline btn-small">Daftar</button>
+                                </div>
+                            </div>
+
+                            <div class="deadline-item">
+                                <div class="deadline-icon">💼</div>
+                                <div class="deadline-info">
+                                    <div class="deadline-title">Networking Session - Startup</div>
+                                    <div class="deadline-meta">📅 18 April 2026 • 🕐 14.00 WIB • 📍 Jakarta</div>
+                                </div>
+                                <div class="deadline-actions">
+                                    <button class="btn btn-outline btn-small">Daftar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PREMIUM PROMO -->
+                    <div class="card"
+                        style="background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%); color: white;">
+                        <div class="card-header" style="border-bottom-color: rgba(255,255,255,0.2);">
+                            <h2 class="card-title" style="color: white;">✨ Upgrade ke Premium</h2>
+                        </div>
+                        <ul style="list-style: none; margin-bottom: 20px;">
+                            <li style="margin-bottom: 10px; font-size: 14px;">✅ Unlimited simpan lomba</li>
+                            <li style="margin-bottom: 10px; font-size: 14px;">✅ WhatsApp reminder</li>
+                            <li style="margin-bottom: 10px; font-size: 14px;">✅ Priority team matching</li>
+                            <li style="margin-bottom: 10px; font-size: 14px;">✅ Analytics & insights</li>
+                            <li style="margin-bottom: 10px; font-size: 14px;">✅ Support 24/7</li>
+                        </ul>
+                        <button class="btn" style="width: 100%; background: white; color: #4F46E5;"
+                            onclick="openModal('premium')">Upgrade Sekarang - Rp 29.000/bln</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <span class="logo-text">Comp<span>edia</span></span>
+                <p>Platform agregator lomba terpusat untuk mahasiswa Indonesia. Temukan info lomba, bentuk tim ideal,
+                    dan raih prestasimu!</p>
+                <div class="footer-social">
+                    <a href="#">📘</a>
+                    <a href="#">📸</a>
+                    <a href="#">🐦</a>
+                    <a href="#">💼</a>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h4>Produk</h4>
+                <ul>
+                    <li><a href="compedia-search-page.html">Cari Lomba</a></li>
+                    <li><a href="compedia-team-matching.html">Cari Tim</a></li>
+                    <li><a href="#">Premium</a></li>
+                    <li><a href="#">Untuk Kampus</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4>Perusahaan</h4>
+                <ul>
+                    <li><a href="#">Tentang Kami</a></li>
+                    <li><a href="#">Karir</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Kontak</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4>Bantuan</h4>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 PT. Compedia, Tangerang. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h3 class="modal-title" id="modal-title">Konfirmasi</h3>
+            <p class="modal-desc" id="modal-desc">Deskripsi modal</p>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" onclick="closeModal()">Batal</button>
+                <button class="btn btn-primary" onclick="closeModal()">Konfirmasi</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal Functionality
+        function openModal(action) {
+            const modal = document.getElementById('modal');
+            const title = document.getElementById('modal-title');
+            const desc = document.getElementById('modal-desc');
+
+            const messages = {
+                'daftar': {
+                    title: 'Daftar Lomba',
+                    desc: 'Anda akan diarahkan ke halaman pendaftaran resmi lomba. Pastikan semua persyaratan sudah terpenuhi sebelum mendaftar.'
+                },
+                'reminder': {
+                    title: 'Set Reminder',
+                    desc: 'Pilih waktu pengingat: H-7, H-3, H-1 sebelum deadline. Notifikasi akan dikirim via email dan push notification.'
+                },
+                'team': {
+                    title: 'Kelola Tim',
+                    desc: 'Anda akan diarahkan ke halaman manajemen tim untuk melihat anggota, chat, dan task board.'
+                },
+                'teamDetail': {
+                    title: 'Detail Tim',
+                    desc: 'Lihat profil lengkap tim, riwayat kompetisi, dan performa anggota.'
+                },
+                'chat': {
+                    title: 'Chat Tim',
+                    desc: 'Buka chat room tim untuk berdiskusi dan berkolaborasi dengan anggota tim.'
+                },
+                'task': {
+                    title: 'Task Board',
+                    desc: 'Kelola task dan progress tim dengan kanban board yang terintegrasi.'
+                },
+                'invite': {
+                    title: 'Undang Teman',
+                    desc: 'Kirim undangan ke teman melalui email, WhatsApp, atau link undangan.'
+                },
+                'calendar': {
+                    title: 'Sync Calendar',
+                    desc: 'Sinkronisasi deadline lomba dengan Google Calendar atau Outlook Calendar Anda.'
+                },
+                'notifications': {
+                    title: 'Notifikasi',
+                    desc: 'Anda memiliki 5 notifikasi baru: 2 deadline reminder, 2 undangan tim, 1 update lomba.'
+                },
+                'premium': {
+                    title: 'Upgrade ke Premium',
+                    desc: 'Dapatkan akses unlimited ke semua fitur premium termasuk WhatsApp reminder, priority matching, dan analytics. Rp 29.000/bulan.'
+                }
+            };
+
+            if (messages[action]) {
+                title.textContent = messages[action].title;
+                desc.textContent = messages[action].desc;
+            }
+
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function (event) {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Lomba - National Hackathon 2026 - Compedia</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #F9FAFB;
+        }
+
+        /* TOP BAR */
+        .top-bar {
+            background: #4F46E5;
+            color: white;
+            padding: 10px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
+        }
+
+        .top-bar-left {
+            display: flex;
+            gap: 20px;
+        }
+
+        .top-bar-right {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .top-bar a {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* MAIN NAVIGATION */
+        .main-nav {
+            background: white;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #E5E7EB;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            font-size: 26px;
+            font-weight: bold;
+            color: #1F2937;
+        }
+
+        .logo-text span {
+            color: #4F46E5;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #374151;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #4F46E5;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-outline {
+            background: white;
+            color: #4F46E5;
+            border: 2px solid #4F46E5;
+        }
+
+        .btn-outline:hover {
+            background: #4F46E5;
+            color: white;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6B7280;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4B5563;
+        }
+
+        .btn-success {
+            background: #10B981;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #059669;
+        }
+
+        .btn-danger {
+            background: #EF4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #DC2626;
+        }
+
+        /* BREADCRUMB */
+        .breadcrumb {
+            padding: 20px 50px;
+            background: #F3F4F6;
+            font-size: 14px;
+        }
+
+        .breadcrumb a {
+            color: #4F46E5;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* DETAIL CONTAINER */
+        .detail-container {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 30px;
+            padding: 30px 50px;
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        /* MAIN CONTENT */
+        .detail-main {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .detail-header {
+            position: relative;
+        }
+
+        .detail-image {
+            width: 100%;
+            height: 350px;
+            background: linear-gradient(135deg, #E5E7EB 0%, #D1D5DB 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9CA3AF;
+            font-size: 16px;
+        }
+
+        .detail-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #10B981;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .detail-badge.urgent {
+            background: #EF4444;
+        }
+
+        .detail-content {
+            padding: 40px;
+        }
+
+        .detail-category {
+            display: inline-block;
+            background: #EEF2FF;
+            color: #4F46E5;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .detail-title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1F2937;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .detail-meta {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+            padding: 25px;
+            background: #F9FAFB;
+            border-radius: 10px;
+        }
+
+        .detail-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 15px;
+            color: #374151;
+        }
+
+        .detail-meta-item strong {
+            color: #1F2937;
+        }
+
+        .detail-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #E5E7EB;
+        }
+
+        .btn-large {
+            padding: 15px 35px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        /* TABS */
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #E5E7EB;
+            overflow-x: auto;
+        }
+
+        .tab {
+            padding: 15px 25px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            font-weight: 500;
+            color: #6B7280;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .tab:hover {
+            color: #4F46E5;
+        }
+
+        .tab.active {
+            border-bottom-color: #4F46E5;
+            color: #4F46E5;
+        }
+
+        /* CONTENT SECTIONS */
+        .content-section {
+            margin-bottom: 40px;
+        }
+
+        .section-heading {
+            font-size: 22px;
+            font-weight: bold;
+            color: #1F2937;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-heading::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: #4F46E5;
+            border-radius: 2px;
+        }
+
+        .section-content {
+            color: #374151;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+        }
+
+        .section-content ul {
+            padding-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        .section-content li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .info-box {
+            background: #F9FAFB;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid #4F46E5;
+        }
+
+        .info-box h4 {
+            color: #4F46E5;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .prize-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .prize-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #E5E7EB;
+        }
+
+        .prize-rank {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .prize-amount {
+            font-size: 18px;
+            font-weight: bold;
+            color: #10B981;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #E5E7EB;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 25px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            background: #4F46E5;
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+
+        .timeline-item.completed::before {
+            background: #10B981;
+        }
+
+        .timeline-item.current::before {
+            background: #F59E0B;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.3);
+            }
+        }
+
+        .timeline-date {
+            font-weight: bold;
+            color: #1F2937;
+            margin-bottom: 5px;
+        }
+
+        .timeline-desc {
+            color: #6B7280;
+            font-size: 14px;
+        }
+
+        /* SIDEBAR */
+        .detail-sidebar {
+            position: sticky;
+            top: 140px;
+            height: fit-content;
+        }
+
+        .sidebar-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid #E5E7EB;
+        }
+
+        .sidebar-card-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1F2937;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-box {
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .status-box.open {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .status-box.closed {
+            background: #FEF2F2;
+            color: #991B1B;
+        }
+
+        .countdown {
+            text-align: center;
+            padding: 20px;
+            background: #F9FAFB;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .countdown-title {
+            font-size: 14px;
+            color: #6B7280;
+            margin-bottom: 10px;
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .countdown-item {
+            text-align: center;
+        }
+
+        .countdown-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #4F46E5;
+        }
+
+        .countdown-label {
+            font-size: 12px;
+            color: #6B7280;
+        }
+
+        .sidebar-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .sidebar-actions .btn {
+            width: 100%;
+            text-align: center;
+        }
+
+        .organizer-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #F9FAFB;
+            border-radius: 8px;
+        }
+
+        .organizer-logo {
+            width: 50px;
+            height: 50px;
+            background: #4F46E5;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .organizer-details h4 {
+            font-size: 14px;
+            color: #1F2937;
+            margin-bottom: 3px;
+        }
+
+        .organizer-details p {
+            font-size: 13px;
+            color: #6B7280;
+        }
+
+        .share-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .share-btn {
+            padding: 10px;
+            border: 1px solid #D1D5DB;
+            background: white;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .share-btn:hover {
+            background: #4F46E5;
+            color: white;
+            border-color: #4F46E5;
+        }
+
+        .related-competitions {
+            margin-top: 40px;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .related-card {
+            background: white;
+            border: 1px solid #E5E7EB;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .related-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .related-image {
+            height: 120px;
+            background: linear-gradient(135deg, #E5E7EB 0%, #D1D5DB 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9CA3AF;
+            font-size: 12px;
+        }
+
+        .related-content {
+            padding: 15px;
+        }
+
+        .related-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #1F2937;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .related-meta {
+            font-size: 12px;
+            color: #6B7280;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: #1F2937;
+            color: white;
+            padding: 60px 50px 30px;
+            margin-top: 50px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 50px;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+        }
+
+        .footer-brand .logo-text {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .footer-brand .logo-text span {
+            color: #4F46E5;
+        }
+
+        .footer-brand p {
+            color: #9CA3AF;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 12px;
+        }
+
+        .footer-social a {
+            width: 38px;
+            height: 38px;
+            background: #374151;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-social a:hover {
+            background: #4F46E5;
+        }
+
+        .footer-column h4 {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: #9CA3AF;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #374151;
+            padding-top: 25px;
+            text-align: center;
+            color: #9CA3AF;
+            font-size: 14px;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #1F2937;
+        }
+
+        .modal-desc {
+            color: #6B7280;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <span>📧 contact@compedia.id</span>
+            <span>📱 +62 812-XXXX-XXXX</span>
+        </div>
+        <div class="top-bar-right">
+            <a href="#">Bahasa Indonesia ▼</a>
+            <a href="#">Bantuan</a>
+            <a href="#">Untuk Kampus</a>
+        </div>
+    </div>
+
+    <!-- MAIN NAVIGATION -->
+    <nav class="main-nav">
+        <div class="logo-section" onclick="window.location.href='compedia-landing-page.html'">
+            <div class="logo-icon">C</div>
+            <div class="logo-text">Comp<span>edia</span></div>
+        </div>
+
+        <div class="nav-links">
+            <a href="compedia-landing-page.html">Beranda</a>
+            <a href="compedia-search-page.html" class="active">Cari Lomba</a>
+            <a href="compedia-team-matching.html">Cari Tim</a>
+            <a href="#">Cara Kerja</a>
+            <a href="#">Blog</a>
+            <a href="#">Tentang Kami</a>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="compedia-login.html" class="btn btn-outline">Masuk</a>
+            <a href="compedia-register.html" class="btn btn-primary">Daftar Gratis</a>
+        </div>
+    </nav>
+
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb">
+        <a href="compedia-landing-page.html">Beranda</a> /
+        <a href="compedia-search-page.html">Cari Lomba</a> /
+        <strong>Detail Lomba</strong>
+    </div>
+
+    <!-- DETAIL CONTAINER -->
+    <div class="detail-container">
+        <!-- MAIN CONTENT -->
+        <main class="detail-main">
+            <div class="detail-header">
+                <div class="detail-image">[Gambar Lomba 1200x500]</div>
+                <span class="detail-badge urgent">⏰ H-7 Deadline</span>
+            </div>
+
+            <div class="detail-content">
+                <span class="detail-category">Teknologi & IT</span>
+                <h1 class="detail-title">National Hackathon 2026</h1>
+
+                <div class="detail-meta">
+                    <div class="detail-meta-item">
+                        <span>📅</span>
+                        <div>
+                            <strong>Deadline</strong><br>
+                            15 April 2026
+                        </div>
+                    </div>
+                    <div class="detail-meta-item">
+                        <span>🏆</span>
+                        <div>
+                            <strong>Total Hadiah</strong><br>
+                            Rp 50.000.000
+                        </div>
+                    </div>
+                    <div class="detail-meta-item">
+                        <span>📊</span>
+                        <div>
+                            <strong>Tingkat</strong><br>
+                            Nasional
+                        </div>
+                    </div>
+                    <div class="detail-meta-item">
+                        <span>👥</span>
+                        <div>
+                            <strong>Format</strong><br>
+                            Tim (3-4 orang)
+                        </div>
+                    </div>
+                    <div class="detail-meta-item">
+                        <span>📍</span>
+                        <div>
+                            <strong>Lokasi</strong><br>
+                            Jakarta & Online
+                        </div>
+                    </div>
+                    <div class="detail-meta-item">
+                        <span>💰</span>
+                        <div>
+                            <strong>Biaya Daftar</strong><br>
+                            Rp 200.000/tim
+                        </div>
+                    </div>
+                </div>
+
+                <div class="detail-actions">
+                    <button class="btn btn-primary btn-large" onclick="openModal('daftar')">📝 Daftar Sekarang</button>
+                    <button class="btn btn-outline btn-large" onclick="openModal('simpan')">💾 Simpan Lomba</button>
+                    <button class="btn btn-success btn-large"
+                        onclick="window.location.href='compedia-team-matching.html'">🤝 Cari Tim</button>
+                </div>
+
+                <!-- TABS -->
+                <div class="tabs">
+                    <div class="tab active" onclick="showTab('deskripsi')">Deskripsi</div>
+                    <div class="tab" onclick="showTab('persyaratan')">Persyaratan</div>
+                    <div class="tab" onclick="showTab('timeline')">Timeline</div>
+                    <div class="tab" onclick="showTab('penghargaan')">Penghargaan</div>
+                    <div class="tab" onclick="showTab('faq')">FAQ</div>
+                </div>
+
+                <!-- DESKRIPSI -->
+                <div id="deskripsi" class="content-section">
+                    <h2 class="section-heading">Deskripsi Lomba</h2>
+                    <div class="section-content">
+                        <p>
+                            <strong>National Hackathon 2026</strong> adalah kompetisi programming 48 jam yang mengajak
+                            peserta untuk menciptakan solusi teknologi inovatif untuk masalah sosial. Hackathon ini
+                            terbuka untuk mahasiswa S1/D4 dari seluruh Indonesia.
+                        </p>
+                        <p>
+                            <strong>TEMA: "Technology for Social Good"</strong>
+                        </p>
+                        <p>
+                            Peserta akan bekerja dalam tim untuk mengembangkan prototype aplikasi atau sistem yang
+                            dapat menyelesaikan masalah sosial di Indonesia. Kategori yang dapat dipilih meliputi:
+                        </p>
+                        <ul>
+                            <li>🏥 Health Tech - Solusi untuk bidang kesehatan</li>
+                            <li>📚 Edu Tech - Solusi untuk bidang pendidikan</li>
+                            <li>🌱 Green Tech - Solusi untuk bidang lingkungan</li>
+                            <li>💰 Fin Tech - Solusi untuk bidang keuangan inklusif</li>
+                        </ul>
+
+                        <div class="info-box">
+                            <h4>💡 Tips Mengikuti Lomba Ini</h4>
+                            <ul>
+                                <li>Pastikan tim memiliki kombinasi skill yang lengkap (programming, design, business)
+                                </li>
+                                <li>Pahami tema dengan baik dan lakukan riset masalah sosial yang ingin diselesaikan
+                                </li>
+                                <li>Siapkan prototype yang dapat didemokan dengan baik</li>
+                                <li>Latih presentasi dan pitch deck sebelum hari-H</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PERSYARATAN -->
+                <div id="persyaratan" class="content-section" style="display: none;">
+                    <h2 class="section-heading">Persyaratan Peserta</h2>
+                    <div class="section-content">
+                        <ul>
+                            <li>✅ Mahasiswa aktif S1/D4 semester 3-8 dari universitas di Indonesia</li>
+                            <li>✅ Memiliki KTP dan KTM yang masih berlaku</li>
+                            <li>✅ Tim terdiri dari 3-4 orang (minimal 1 anggota memiliki pengalaman programming)</li>
+                            <li>✅ Membayar biaya pendaftaran Rp 200.000 per tim</li>
+                            <li>✅ Bersedia mengikuti seluruh rangkaian acara dari pembukaan hingga penutupan</li>
+                            <li>✅ Karya yang dihasilkan adalah karya original dan belum pernah diikutsertakan dalam
+                                lomba lain</li>
+                            <li>✅ Memiliki laptop dan koneksi internet yang memadai</li>
+                        </ul>
+
+                        <div class="info-box">
+                            <h4>📋 Dokumen yang Harus Disiapkan</h4>
+                            <ul>
+                                <li>Scan KTM semua anggota tim</li>
+                                <li>Scan KTP semua anggota tim</li>
+                                <li>Surat keterangan aktif kuliah (optional)</li>
+                                <li>CV/Portfolio tim (optional, nilai tambah)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TIMELINE -->
+                <div id="timeline" class="content-section" style="display: none;">
+                    <h2 class="section-heading">Timeline Kompetisi</h2>
+                    <div class="section-content">
+                        <div class="timeline">
+                            <div class="timeline-item completed">
+                                <div class="timeline-date">📌 1 Maret 2026</div>
+                                <div class="timeline-desc">Pendaftaran dibuka</div>
+                            </div>
+                            <div class="timeline-item current">
+                                <div class="timeline-date">📌 15 April 2026</div>
+                                <div class="timeline-desc">Deadline pendaftaran ⏰ SEKARANG</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">📌 20 April 2026</div>
+                                <div class="timeline-desc">Pengumuman seleksi administrasi</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">📌 25-27 April 2026</div>
+                                <div class="timeline-desc">Pelaksanaan Hackathon (48 jam)</div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-date">📌 30 April 2026</div>
+                                <div class="timeline-desc">Pengumuman pemenang</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PENGHARGAAN -->
+                <div id="penghargaan" class="content-section" style="display: none;">
+                    <h2 class="section-heading">Penghargaan</h2>
+                    <div class="section-content">
+                        <p>Total hadiah yang diperebutkan sebesar <strong>Rp 50.000.000</strong> dengan rincian:</p>
+
+                        <div class="prize-list">
+                            <div class="prize-item">
+                                <div class="prize-rank">🥇</div>
+                                <div class="prize-amount">Rp 25.000.000</div>
+                                <div>Juara 1</div>
+                                <div style="font-size: 13px; color: #6B7280; margin-top: 8px;">+ Trophy + Sertifikat
+                                </div>
+                            </div>
+                            <div class="prize-item">
+                                <div class="prize-rank">🥈</div>
+                                <div class="prize-amount">Rp 15.000.000</div>
+                                <div>Juara 2</div>
+                                <div style="font-size: 13px; color: #6B7280; margin-top: 8px;">+ Trophy + Sertifikat
+                                </div>
+                            </div>
+                            <div class="prize-item">
+                                <div class="prize-rank">🥉</div>
+                                <div class="prize-amount">Rp 10.000.000</div>
+                                <div>Juara 3</div>
+                                <div style="font-size: 13px; color: #6B7280; margin-top: 8px;">+ Trophy + Sertifikat
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-box">
+                            <h4>🎁 Penghargaan Tambahan</h4>
+                            <ul>
+                                <li>🏆 Best UI/UX Design - Rp 5.000.000</li>
+                                <li>🏆 Best Innovation - Rp 5.000.000</li>
+                                <li>🏆 People's Choice Award - Rp 3.000.000</li>
+                                <li>📜 Sertifikat untuk semua peserta</li>
+                                <li>🤝 Kesempatan inkubasi startup untuk juara 1</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ -->
+                <div id="faq" class="content-section" style="display: none;">
+                    <h2 class="section-heading">FAQ (Frequently Asked Questions)</h2>
+                    <div class="section-content">
+                        <div style="margin-bottom: 20px;">
+                            <strong>Q: Apakah boleh ikut individual?</strong><br>
+                            <p style="color: #6B7280; margin-top: 5px;">A: Tidak, lomba ini khusus untuk tim dengan 3-4
+                                anggota.</p>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <strong>Q: Apakah boleh lintas universitas?</strong><br>
+                            <p style="color: #6B7280; margin-top: 5px;">A: Boleh, tim dapat terdiri dari mahasiswa
+                                universitas yang berbeda.</p>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <strong>Q: Apakah ada biaya pendaftaran?</strong><br>
+                            <p style="color: #6B7280; margin-top: 5px;">A: Ya, Rp 200.000 per tim. Pembayaran dapat
+                                dilakukan via transfer bank atau e-wallet.</p>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <strong>Q: Apakah harus hadir langsung?</strong><br>
+                            <p style="color: #6B7280; margin-top: 5px;">A: Hybrid (Jakarta & Online). Finalis wajib
+                                hadir di Jakarta, seleksi awal dapat online.</p>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <strong>Q: Bagaimana cara menghubungi panitia?</strong><br>
+                            <p style="color: #6B7280; margin-top: 5px;">A: Email ke info@hackathon2026.id atau WhatsApp
+                                ke +62 812-XXXX-XXXX</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- SIDEBAR -->
+        <aside class="detail-sidebar">
+            <!-- STATUS CARD -->
+            <div class="sidebar-card">
+                <h3 class="sidebar-card-title">⏰ Status Pendaftaran</h3>
+                <div class="status-box open">✅ TERBUKA</div>
+
+                <div class="countdown">
+                    <div class="countdown-title">Sisa Waktu Pendaftaran</div>
+                    <div class="countdown-timer">
+                        <div class="countdown-item">
+                            <div class="countdown-number">07</div>
+                            <div class="countdown-label">Hari</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number">14</div>
+                            <div class="countdown-label">Jam</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number">32</div>
+                            <div class="countdown-label">Menit</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-actions">
+                    <button class="btn btn-primary" onclick="openModal('daftar')">📝 Daftar Sekarang</button>
+                    <button class="btn btn-outline" onclick="openModal('simpan')">💾 Simpan</button>
+                    <button class="btn btn-success" onclick="window.location.href='compedia-team-matching.html'">🤝 Cari
+                        Tim</button>
+                    <button class="btn btn-secondary" onclick="openModal('reminder')">🔔 Set Reminder</button>
+                </div>
+            </div>
+
+            <!-- ORGANIZER CARD -->
+            <div class="sidebar-card">
+                <h3 class="sidebar-card-title">🏢 Penyelenggara</h3>
+                <div class="organizer-info">
+                    <div class="organizer-logo">K</div>
+                    <div class="organizer-details">
+                        <h4>Kementerian Kominfo</h4>
+                        <p>Penyelenggara Resmi</p>
+                    </div>
+                </div>
+                <div style="margin-top: 15px; font-size: 13px; color: #6B7280;">
+                    <div style="margin-bottom: 8px;">📧 info@hackathon2026.id</div>
+                    <div style="margin-bottom: 8px;">🌐 www.hackathon2026.id</div>
+                    <div>📱 +62 812-XXXX-XXXX</div>
+                </div>
+            </div>
+
+            <!-- SHARE CARD -->
+            <div class="sidebar-card">
+                <h3 class="sidebar-card-title">📢 Bagikan</h3>
+                <div class="share-buttons">
+                    <button class="share-btn">📘 Facebook</button>
+                    <button class="share-btn">🐦 Twitter</button>
+                    <button class="share-btn">💬 WhatsApp</button>
+                    <button class="share-btn">🔗 Copy Link</button>
+                </div>
+            </div>
+
+            <!-- RELATED COMPETITIONS -->
+            <div class="sidebar-card">
+                <h3 class="sidebar-card-title">🏆 Lomba Terkait</h3>
+                <div style="display: flex; flex-direction: column; gap: 15px;">
+                    <div class="related-card" onclick="window.location.href='compedia-detail-page.html'">
+                        <div class="related-image">[Gambar]</div>
+                        <div class="related-content">
+                            <div class="related-title">UI/UX Design Challenge 2026</div>
+                            <div class="related-meta">📅 25 Apr | 🏆 Rp 25 Juta</div>
+                        </div>
+                    </div>
+                    <div class="related-card" onclick="window.location.href='compedia-detail-page.html'">
+                        <div class="related-image">[Gambar]</div>
+                        <div class="related-content">
+                            <div class="related-title">Business Plan Competition</div>
+                            <div class="related-meta">📅 30 Apr | 🏆 Rp 75 Juta</div>
+                        </div>
+                    </div>
+                    <div class="related-card" onclick="window.location.href='compedia-detail-page.html'">
+                        <div class="related-image">[Gambar]</div>
+                        <div class="related-content">
+                            <div class="related-title">AI Research Grant Program</div>
+                            <div class="related-meta">📅 5 Mei | 🏆 Rp 100 Juta</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <span class="logo-text">Comp<span>edia</span></span>
+                <p>Platform agregator lomba terpusat untuk mahasiswa Indonesia. Temukan info lomba, bentuk tim ideal,
+                    dan raih prestasimu!</p>
+                <div class="footer-social">
+                    <a href="#">📘</a>
+                    <a href="#">📸</a>
+                    <a href="#">🐦</a>
+                    <a href="#">💼</a>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h4>Produk</h4>
+                <ul>
+                    <li><a href="compedia-search-page.html">Cari Lomba</a></li>
+                    <li><a href="compedia-team-matching.html">Cari Tim</a></li>
+                    <li><a href="#">Premium</a></li>
+                    <li><a href="#">Untuk Kampus</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4>Perusahaan</h4>
+                <ul>
+                    <li><a href="#">Tentang Kami</a></li>
+                    <li><a href="#">Karir</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Kontak</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4>Bantuan</h4>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 PT. Compedia, Tangerang. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h3 class="modal-title" id="modal-title">Konfirmasi</h3>
+            <p class="modal-desc" id="modal-desc">Deskripsi modal</p>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" onclick="closeModal()">Batal</button>
+                <button class="btn btn-primary" onclick="closeModal()">Konfirmasi</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab Functionality
+        function showTab(tabName) {
+            // Hide all content sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.style.display = 'none';
+            });
+
+            // Remove active class from all tabs
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Show selected content
+            document.getElementById(tabName).style.display = 'block';
+
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Modal Functionality
+        function openModal(action) {
+            const modal = document.getElementById('modal');
+            const title = document.getElementById('modal-title');
+            const desc = document.getElementById('modal-desc');
+
+            if (action === 'daftar') {
+                title.textContent = 'Daftar Lomba';
+                desc.textContent = 'Anda akan diarahkan ke halaman pendaftaran. Pastikan semua persyaratan sudah terpenuhi. Lanjutkan?';
+            } else if (action === 'simpan') {
+                title.textContent = 'Simpan Lomba';
+                desc.textContent = 'Lomba ini akan disimpan ke dashboard Anda. Anda akan menerima notifikasi tentang update dan deadline.';
+            } else if (action === 'reminder') {
+                title.textContent = 'Set Reminder';
+                desc.textContent = 'Pilih waktu pengingat: H-7, H-3, H-1 sebelum deadline. Notifikasi akan dikirim via email dan push notification.';
+            }
+
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function (event) {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+
+</body>
+
+</html>
